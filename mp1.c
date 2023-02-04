@@ -124,6 +124,14 @@ double CacheSizeTest(int line_size)
   }
 
   double retval;
+
+  for(int i = 0; i<max_iter-1; i++){ 
+    printf("Percent diff between %lf and %lf is %lf \n", retvec[i], retvec[i+1], PercentDiff(retvec[i], retvec[i+1]));
+      if(PercentDiff(retvec[i], retvec[i+1]) < .3){
+        //retval = pow(2.0,(double)i+1);
+        printf("Not Different at %d\n", i+1);
+      }
+  }
   free(retvec);
   return retval; 
 }
