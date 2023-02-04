@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
+#include <time.h>
 #include <math.h>
 #define ITER   10
 #define MAX_N 64*1024*1024 
@@ -9,6 +10,7 @@
 #define START_SIZE 1*MB
 #define STOP_SIZE  16*MB
 #define SIZE 64
+#define BILLION 1000000000L
 char array[MAX_N];
 /////////////////////////////////////////////////////////
 // Provides elapsed Time between t1 and t2 in milli sec
@@ -19,6 +21,7 @@ double elapsedTime(struct timeval t1, struct timeval t2){
   delta += (t2.tv_usec - t1.tv_usec) / 1000.0;   // us to ms
   return delta; 
 }
+
 /////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////
 double DummyTest(void)
@@ -42,25 +45,26 @@ double DummyTest(void)
 /////////////////////////////////////////////////////////
 double LineSizeTest(void)
 {    
-    struct timeval t1, t2;
+    struct timespec start, end;
     int *vec = (int *)malloc(sizeof(int) * SIZE);
     double *retvec = (double *)calloc(sizeof(int) * SIZE, sizeof(double));
-    unsigned char byte;
+    uint8_t byte;
+    uint64_t diff;
 
     for(int i = 0; i<SIZE; i++)
     {
         for(int j = 0; j<sizeof(int); j++) {
-            gettimeofday(&t1, NULL);
+            clock_gettime(CLOCK_MONOTONIC, &start);
             byte = (vec[i] >> (8*j)) & 0xff;
-            gettimeofday(&t2, NULL);
-            printf("elapsedTime is: %lf \n", elapsedTime(t1,t2));
-            retvec[i + j] = elapsedTime(t1,t2);
+            clock_gettime(CLOCK_MONOTONIC, &end);
+            diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+            printf("elapsedTime is: %llu nS \n", (long long unsigned int) diff);
         }
 
     }
-    for(int i = 0; i<10; i++){
-        printf("Time at %d iteration %lf \n", i, retvec[i]);
-    }
+    //for(int i = 0; i<10; i++){
+    //   printf("Time at %d iteration %lf \n", i, retvec[i]);
+   // }
     free(vec);
     free(retvec);
     double retval = 0.0;
