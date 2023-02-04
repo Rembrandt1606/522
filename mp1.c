@@ -222,7 +222,7 @@ int main(){
   clock_gettime(CLOCK_MONOTONIC, &end);
   time_diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
 
-  printf("This access took %d nanoseconds\n", time_diff);
+  printf("This access took %llu nanoseconds\n", time_diff);
   free(testr);
   // Add your code here, and comment above
 }
