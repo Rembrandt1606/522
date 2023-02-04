@@ -45,6 +45,25 @@ double DummyTest(void)
 /////////////////////////////////////////////////////////
 double LineSizeTest(void)
 {    
+
+  int num_steps = 10;
+  double *retvec = (double *)calloc(num_steps, sizeof(double));
+
+  for(int i = 0; i<num_steps; i++){
+    struct timeval t1, t2;
+
+    gettimeofday(&t1, NULL);
+    for(int j=0;j<ITER;j++)
+    {
+      for(int k=0; k< MAX_N; k++)
+      {
+        array[k] += rand();
+      }
+    }
+    gettimeofday(&t2, NULL);
+    printf("[INFO] At iter %d elapsedTime is: %lf S \n", i, elapsedTime(t1,t2));
+  }
+  /*
     struct timespec start, end;
     int *vec = (int *)malloc(sizeof(int) * SIZE);
     double *retvec = (double *)calloc(sizeof(int) * SIZE, sizeof(double));
@@ -67,6 +86,8 @@ double LineSizeTest(void)
     //   printf("Time at %d iteration %lf \n", i, retvec[i]);
    // }
     free(vec);
+    free(retvec);
+    */
     free(retvec);
     double retval = 0.0;
   return retval; 
