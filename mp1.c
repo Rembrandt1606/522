@@ -128,7 +128,9 @@ double CacheSizeTest(int line_size)
         num_iters++;
     }
     gettimeofday(&t2, NULL);
-    printf("[INFO] At step size %d elapsedTime is: %lf ms \n", current_size, elapsedTime(t1,t2));
+    //printf("[INFO] At step size %d elapsedTime is: %lf ms \n", current_size, elapsedTime(t1,t2));
+    printf("[INFO] The total runtime is: %llu nanoseconds \n", (run_sum));
+
     printf("[INFO] The average access time is: %llu nanoseconds \n", (run_sum/num_iters));
     retvec[i] = elapsedTime(t1,t2);
   }
