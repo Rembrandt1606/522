@@ -53,7 +53,7 @@ double LineSizeTest(void)
     for(int i = 0; i<SIZE; i++)
     {
     clock_gettime(CLOCK_MONOTONIC, &start);
-    val = vec[i];
+    val = vec[i] * 3;
     clock_gettime(CLOCK_MONOTONIC, &end);
     diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
     printf("[INFO] At iter %d elapsedTime is: %llu nS \n", i+1, (long long unsigned int) diff);
