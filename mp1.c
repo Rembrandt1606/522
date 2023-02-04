@@ -120,7 +120,7 @@ int main(){
   int line_size = (int)LineSizeTest();
   int int_size = (int)sizeof(int);
   printf("int size: %d \n", int_size);
-  printf("[INFO] Cache Line Size: %d bytes \n", line_size * 16);
+  printf("[INFO] Cache Line Size: %d bytes \n", line_size);
 
   // Add your code here, and comment above
 }
