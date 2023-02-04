@@ -266,6 +266,18 @@ int main(){
       
       printf("|     %d       %llu     | \n", i+16, time_diff);
   }
+
+  for (int j = 2; j< number_of_CL;j++){ 
+    for(int i = 0; i < line_size/4; i++){
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        array[i+16*j] = 1;
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        time_diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        
+        
+        printf("|     %d       %llu     | \n", i+16*j, time_diff);
+    }
+  }
   free(testr);
 
 
