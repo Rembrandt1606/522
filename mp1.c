@@ -113,8 +113,8 @@ double CacheSizeTest(int line_size)
     num_iters = 0;
     run_sum = 0;
     
-    // Pre-cache array addresses, not that large array sizes will no fit
-    for (int j=0; j<current_size; j+=line_size)
+    // Pre-cache array addresses and ensure early address are cached
+    for (int j=current_size; j>0; j--)
     {
         array[j] = 0;
     }
