@@ -144,7 +144,7 @@ double CacheSizeTest(int line_size)
     {
         testr = rand() % (ii + 1); //randomise j for shuffle with Fisher Yates
         access = (int)floor((testr/line_size));
-        //printf("[INFO] Accessing at %d index \n", access);
+        printf("[INFO] Accessing at %d index \n", access);
         clock_gettime(CLOCK_MONOTONIC, &start);
         array[access] += 1;
         clock_gettime(CLOCK_MONOTONIC, &end);
