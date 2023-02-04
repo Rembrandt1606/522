@@ -267,7 +267,7 @@ int main(){
       printf("|     %d       %llu     | \n", i+16, time_diff);
   }
 
-  for (int j = 2; j< number_of_CL + 4;j++){ 
+  /*for (int j = 2; j< number_of_CL;j++){ 
     printf("------------ cacheline %d -----------------\n", j);
     for(int i = 0; i < line_size/4; i++){
         clock_gettime(CLOCK_MONOTONIC, &start);
@@ -278,7 +278,19 @@ int main(){
         
         printf("|     %d       %llu     | \n", i+16*j, time_diff);
     }
-  }
+  }*/
+  printf("Now lets pull a random cache line far ahead \n");
+  int test_num = 403;
+  printf("------------ cacheline %d -----------------\n", test_num);
+    for(int i = 0; i < line_size/4; i++){
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        array[i+16*test_num] = 1;
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        time_diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        
+        
+        printf("|     %d       %llu     | \n", i+16*test_num, time_diff);
+    }
   free(testr);
 
 
