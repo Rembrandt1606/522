@@ -129,14 +129,14 @@ double CacheSizeTest(int line_size)
     run_sum = 0;
     num_accesses = current_size / line_size;
     // Pre-cache array addresses and ensure early address are cached
-    srand(1);
+    srand(i+1);
      for (int ii = MAX_ARR-1; ii > MAX_ARR - num_accesses - 1; ii--) { // for loop to shuffle
          access = rand() % (ii + 1); //randomise j for shuffle with Fisher Yates
          array[access] = 0;
          //printf("[INFO] Access at: %d \n", access);
     }
 
-    srand(1);
+    srand(i+1);
     gettimeofday(&t1, NULL);
     for (int ii = MAX_ARR-1; ii > MAX_ARR - num_accesses - 1; ii--)
     {
