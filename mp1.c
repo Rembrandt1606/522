@@ -140,7 +140,7 @@ double CacheSizeTest(int line_size)
 
     
     gettimeofday(&t1, NULL);
-    for (int k = 0; k<100; k++){
+    for (int k = 0; k<400; k++){
       srand(i+1);
       for (int ii = MAX_ARR-1; ii > MAX_ARR - num_accesses - 1; ii--)
       {
