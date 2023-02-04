@@ -119,7 +119,7 @@ double CacheSizeTest(int line_size)
   struct timespec start, end;
   int num_iters;
   long long unsigned int run_sum = 0;
-  double testr = 0.0;
+  int testr = 0.0;
   printf("[INFO] Max number of steps is: %d \n", max_iter);
   
   for(int i = 0; i<2; i++){
@@ -133,7 +133,7 @@ double CacheSizeTest(int line_size)
     for (int ii = MAX_ARR-1; ii > MAX_ARR - num_accesses - 1; ii--) { // for loop to shuffle
         
         testr = rand() % (ii + 1); //randomise j for shuffle with Fisher Yates
-        access = (int)floor((testr/line_size));
+        access = testr/line_size;
         array[access] = 0;
         printf("[INFO] Access at: %d \n", access);
     }
@@ -143,7 +143,7 @@ double CacheSizeTest(int line_size)
     for (int ii = MAX_ARR-1; ii > MAX_ARR - num_accesses - 1; ii--)
     {
         testr = rand() % (ii + 1); //randomise j for shuffle with Fisher Yates
-        access = (int)floor((testr/line_size));
+        access = testr/line_size;
         printf("[INFO] Accessing at %d index \n", access);
         clock_gettime(CLOCK_MONOTONIC, &start);
         array[access] += 1;
