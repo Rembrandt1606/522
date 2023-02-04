@@ -48,19 +48,27 @@ double LineSizeTest(void)
 
   int num_steps = 10;
   double *retvec = (double *)calloc(num_steps, sizeof(double));
+  struct timeval t1, t2;
 
+  gettimeofday(&t1, NULL);
+  for(int k=0; k< MAX_N; k++)
+      {
+        array[k] = 5;
+      }
+  gettimeofday(&t2, NULL);
+  printf("[INFO] elapsedTime for warm up is: %lf ms \n", elapsedTime(t1,t2));
+  printf("------------------------------------------");
   for(int i = 0; i<num_steps; i++){
-    struct timeval t1, t2;
+    
     double val = pow(2.0,(double) i);
     int iter = (int)val;
-    printf("[INFO] val is %d \n", iter);
     gettimeofday(&t1, NULL);
     for(int k=0; k< MAX_N; k+=iter)
       {
         array[k] *= 2;
       }
     gettimeofday(&t2, NULL);
-    printf("[INFO] At iter %d elapsedTime is: %lf S \n", i, elapsedTime(t1,t2));
+    printf("[INFO] At iter %d elapsedTime is: %lf ms \n", i, elapsedTime(t1,t2));
   }
   /*
     struct timespec start, end;
