@@ -209,19 +209,22 @@ int main(){
   printf("iter: %d \n", iter);
   int *testr = (int *)malloc(64*MB * sizeof(int)); 
   int steps = 64 * 1024 * 1024; 
-  int lengthMod = 1*KB - 1;
+  int lengthMod = 0;
   long long unsigned int time_diff = 0;
   double time;
   struct timeval t1, t2;
   // start timer
-  gettimeofday(&t1, NULL);
-  for(int i = 0; i<steps;i++){
-    testr[(i * 16) & lengthMod]++;
+  for (int j = 0; j<iter; j++){
+    lengthMod = pow(2,j)*MB - 1;
+    gettimeofday(&t1, NULL);
+    for(int i = 0; i<steps;i++){
+      testr[(i * 16) & lengthMod]++;
+    }
+    gettimeofday(&t2, NULL);
+    time = elapsedTime(t1,t2);
+    printf("Time: %lf \n", time);
+    printf("Average time per element: %lf us\n", (double)(time/(double)steps) * 1000);
   }
-  gettimeofday(&t2, NULL);
-  time = elapsedTime(t1,t2);
-  printf("Time: %lf \n", time);
-  printf("Average time per element: %lf us\n", (double)(time/(double)steps) * 1000);
 /*
   int number_of_CL = L1SIZE/line_size;
   printf("[INFO] The number of cache lines in L1 is: %d lines \n", number_of_CL);
