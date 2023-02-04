@@ -76,7 +76,7 @@ double LineSizeTest(void)
     retvec[i] = elapsedTime(t1,t2);
   }
   for(int i = 0; i<num_steps-1; i++){
-    printf("Percent diff between %lf and %lf is %lf", retvec[i], retvec[i+1], PercentDiff(retvec[i], retvec[i+1]));
+    printf("Percent diff between %lf and %lf is %lf \n", retvec[i], retvec[i+1], PercentDiff(retvec[i], retvec[i+1]));
       if(PercentDiff(retvec[i], retvec[i+1]) < .3){
         printf("is diff\n");
       }
