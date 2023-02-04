@@ -203,6 +203,7 @@ int main(){
 
   int d = rand() % (314526644);
   int f = d/16;
+  printf("[INFO] d is: %d \n", d);
   printf("[INFO] f is: %d \n", f); 
   // Add your code here, and comment above
 }
