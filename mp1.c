@@ -5,7 +5,7 @@
 #include <math.h>
 #define ITER   10
 #define MAX_N 64*1024*1024 
-#define MAX_ARR 64*1024*1024 
+#define MAX_ARR 256*1024*1024 
 #define MB    (1024*1024)
 #define KB  1024
 // LLC Parameters assumed
@@ -14,9 +14,9 @@
 #define SIZE 128
 #define BILLION 1000000000L
 char array[MAX_ARR];
-/////////////////////////////////////////////////////////
+
 // Provides elapsed Time between t1 and t2 in milli sec
-/////////////////////////////////////////////////////////
+
 double elapsedTime(struct timeval t1, struct timeval t2){
   double delta;
   delta = (t2.tv_sec - t1.tv_sec) * 1000.0;      // sec to ms
@@ -24,6 +24,19 @@ double elapsedTime(struct timeval t1, struct timeval t2){
   return delta; 
 }
 
+// Fisher Yates suffle
+// SOURCE: https://stackoverflow.com/questions/42321370/fisher-yates-shuffling-algorithm-in-c
+void FisherYates(int *player, int n) { //implementation of Fisher
+
+    int i, j, tmp; // create local variables to hold values for shuffle
+
+    for (i = n - 1; i > 0; i--) { // for loop to shuffle
+         j = rand() % (i + 1); //randomise j for shuffle with Fisher Yates
+         tmp = player[j];
+         player[j] = player[i];
+         player[i] = tmp;
+    }
+}
 /////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////
 double DummyTest(void)
@@ -101,29 +114,34 @@ double CacheSizeTest(int line_size)
   int current_size = 0;
   int max_iter = (int)log_2((MAX_ARR/KB)) + 1;
   double *retvec = (double *)calloc(max_iter, sizeof(double));
+  int access;
+  int num_accesses = 0;
   struct timeval t1, t2;
   struct timespec start, end;
   int num_iters;
   long long unsigned int run_sum = 0;
   printf("[INFO] Max number of steps is: %d \n", max_iter);
-
-  for(int i = 0; i<max_iter; i++){
+  
+  for(int i = 0; i<1; i++){
     
     current_size = KB * (int)pow(2.0,i);
     num_iters = 0;
     run_sum = 0;
-    
+    num_accesses = current_size / line_size;
     // Pre-cache array addresses and ensure early address are cached
-    for (int j=current_size; j>0; j--)
-    {
-        array[j] = 0;
+     for (int ii = MAX_ARR-1; ii > MAX_ARR - num_accesses - 1; ii--) { // for loop to shuffle
+         access = rand() % (ii + 1); //randomise j for shuffle with Fisher Yates
+         array[access] = 0;
+         printf("[INFO] Access at: %d \n", access);
     }
 
     gettimeofday(&t1, NULL);
-    for (int j=0; j<current_size; j+=line_size)
+    for (int ii = MAX_ARR-1; ii > MAX_ARR - num_accesses - 1; ii--)
     {
+        access = rand() % (ii + 1); 
+        printf("[INFO] Accessing at %d index \n", access);
         clock_gettime(CLOCK_MONOTONIC, &start);
-        array[j] += 1;
+        array[ii] += 1;
         clock_gettime(CLOCK_MONOTONIC, &end);
         run_sum += BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
         num_iters++;
