@@ -113,7 +113,7 @@ double CacheSizeTest(int line_size)
 {    
 
   int current_size = 0;
-  int max_iter = (int)log_2((STOP_SIZE/KB));
+  int max_iter = (int)log_2((STOP_SIZE/KB)) - 1;
   double *retvec = (double *)calloc(max_iter, sizeof(double));
   int access;
   int num_accesses = 0;
