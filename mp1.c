@@ -218,7 +218,7 @@ int main(){
   gettimeofday(&t2, NULL);
   time = elapsedTime(t1,t2);
   printf("Time: %lf \n", time);
-  printf("Average time per element: %lf \n", (double)(time/(double)steps));
+  printf("Average time per element: %lf us\n", (double)(time/(double)steps) * 1000);
 /*
   int number_of_CL = L1SIZE/line_size;
   printf("[INFO] The number of cache lines in L1 is: %d lines \n", number_of_CL);
