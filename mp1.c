@@ -155,6 +155,7 @@ double CacheSizeTest(int line_size)
     //printf("[INFO] The average runtime is: %llu nanoseconds \n", (run_sum/3));
     //printf("[INFO] The number of element accessed is: %d \n", num_iters);
     //printf("[INFO] The address range is: %d bytes \n", (num_iters)*line_size);
+    printf("[INFO] Number of accesses is: %d \n", num_accesses);
     printf("[INFO] The current size is: %d KB \n", (int)pow(2.0,i));
     //printf("[INFO] The average access time is: %llu nanoseconds \n", (run_sum/num_iters));
     retvec[i] = elapsedTime(t1,t2);
