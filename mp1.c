@@ -102,12 +102,17 @@ double CacheSizeTest(int line_size)
   int max_iter = (int)log_2((MAX_ARR/KB)) + 1;
   double *retvec = (double *)calloc(max_iter, sizeof(double));
   struct timeval t1, t2;
+  struct timespec start, end;
+  int num_iters;
+  long long unsigned int run_sum = 0;
   printf("[INFO] Max number of steps is: %d \n", max_iter);
 
   for(int i = 0; i<max_iter; i++){
     
     current_size = KB * (int)pow(2.0,i);
-    // Pre-cache array
+    num_iters = 0;
+    run_sum = 0;
+    // Pre-cache array addresses, not that large array sizes will no fit
     for (int j=0; j<current_size; j+=line_size)
     {
         array[j] = 0;
@@ -116,22 +121,27 @@ double CacheSizeTest(int line_size)
     gettimeofday(&t1, NULL);
     for (int j=0; j<current_size; j+=line_size)
     {
-        array[j] = 0;
+        clock_gettime(CLOCK_MONOTONIC, &start);
+        array[j] += rand();
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        run_sum += BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+        num_iters++;
     }
     gettimeofday(&t2, NULL);
     printf("[INFO] At step size %d elapsedTime is: %lf ms \n", current_size, elapsedTime(t1,t2));
+    printf("[INFO] The average access time is: %llu nanoseconds \n", (run_sum/num_iters));
     retvec[i] = elapsedTime(t1,t2);
   }
 
   double retval;
 
-  for(int i = 0; i<max_iter-1; i++){ 
+  /*for(int i = 0; i<max_iter-1; i++){ 
     printf("Percent diff between %lf and %lf is %lf \n", retvec[i], retvec[i+1], PercentDiff(retvec[i], retvec[i+1]));
-      if(PercentDiff(retvec[i], retvec[i+1]) < .3){
+      if(PercentDiff(retvec[i], retvec[i+1]) > .3){
         //retval = pow(2.0,(double)i+1);
-        printf("Not Different at %d\n", i+1);
+        printf("Different at %d\n", i+1);
       }
-  }
+  }*/
   free(retvec);
   return retval; 
 }
