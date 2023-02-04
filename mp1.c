@@ -205,6 +205,7 @@ int main(){
   printf("[INFO] Cache Line Size: %d bytes \n", line_size);
   //double testr = CacheSizeTest(line_size); 
   long div = (STOP_SIZE/START_SIZE) -1;
+  print("div is %ld \n", div);
   int iter = (int)log_2(div) + 1;
   int size = 0;
   printf("iter: %d \n", iter);
