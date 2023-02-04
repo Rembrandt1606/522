@@ -268,7 +268,7 @@ int main(){
   }
 
   for (int j = 2; j< number_of_CL;j++){ 
-    printf("------------ cacheline marker -----------------\n");
+    printf("------------ cacheline %d -----------------\n", j);
     for(int i = 0; i < line_size/4; i++){
         clock_gettime(CLOCK_MONOTONIC, &start);
         array[i+16*j] = 1;
