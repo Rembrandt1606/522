@@ -134,7 +134,7 @@ double CacheSizeTest(int line_size)
     printf("[INFO] ElapsedTime is: %lf ms \n", elapsedTime(t1,t2));
     //printf("[INFO] The average runtime is: %llu nanoseconds \n", (run_sum/3));
     //printf("[INFO] The number of element accessed is: %d \n", num_iters);
-    printf("[INFO] The address range is: %d bytes \n", (num_iters/3)*line_size);
+    printf("[INFO] The address range is: %d bytes \n", (num_iters)*line_size);
     //printf("[INFO] The average access time is: %llu nanoseconds \n", (run_sum/num_iters));*/
     retvec[i] = elapsedTime(t1,t2);
   }
