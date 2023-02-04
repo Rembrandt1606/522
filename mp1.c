@@ -205,7 +205,7 @@ int main(){
   printf("[INFO] Cache Line Size: %d bytes \n", line_size);
   //double testr = CacheSizeTest(line_size); 
    
-  int iter = (int)log_2((STOP_SIZE/START_SIZE)) + 1;
+  int iter = (int)log_2((double)(STOP_SIZE/START_SIZE)) + 1;
   printf("iter: %d \n", iter);
   int *testr = (int *)malloc(64*MB * sizeof(int)); 
   int steps = 64 * 1024 * 1024; 
