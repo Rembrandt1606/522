@@ -211,10 +211,8 @@ int main(){
 
   int *testr = (int *)malloc(number_of_CL * 32 * sizeof(int));
   long long unsigned int time_diff = 0;
-  printf("int *testr = (double *)malloc(number_of_CL * 8 * sizeof(int));\n");
-  printf("Lets create an array with this 8x the number of lines in our L1\n");
 
-  printf("Lets read one of these lines from memory and measure it latency\n"); 
+  printf("Now let us try to read one of these lines from memory and measure it's latency\n"); 
   struct timespec start, end;
 
   clock_gettime(CLOCK_MONOTONIC, &start);
@@ -222,6 +220,13 @@ int main(){
   clock_gettime(CLOCK_MONOTONIC, &end);
   time_diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
 
+  printf("This access took %llu nanoseconds\n", time_diff);
+
+  printf("Okay that good, lets read it again to see if it is shorter now\n", time_diff);
+  clock_gettime(CLOCK_MONOTONIC, &start);
+  array[0] = 1;
+  clock_gettime(CLOCK_MONOTONIC, &end);
+  time_diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
   printf("This access took %llu nanoseconds\n", time_diff);
   free(testr);
   // Add your code here, and comment above
