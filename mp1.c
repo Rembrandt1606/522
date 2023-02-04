@@ -98,7 +98,7 @@ double CacheSizeTest(int line_size)
 {    
 
   int current_size = 0;
-  int max_iter = (int)log_2((MAX_N/KB));
+  int max_iter = (int)log_2((MAX_N/KB)) + 1;
   double *retvec = (double *)calloc(max_iter, sizeof(double));
   struct timeval t1, t2;
   printf("[INFO] Max number of steps is: %d \n", max_iter);
