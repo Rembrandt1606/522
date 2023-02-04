@@ -10,8 +10,8 @@
 #define MB    (1024*1024)
 #define KB  1024
 // LLC Parameters assumed
-#define START_SIZE 1*MB
-#define STOP_SIZE  16*MB
+#define START_SIZE 256*KB
+#define STOP_SIZE  64*MB
 #define SIZE 128
 #define BILLION 1000000000L
 #define L1SIZE 32*KB
@@ -204,8 +204,8 @@ int main(){
   int line_size = (int)LineSizeTest();
   printf("[INFO] Cache Line Size: %d bytes \n", line_size);
   //double testr = CacheSizeTest(line_size); 
-  
-  int iter = (int)log_2(16) + 1;
+  long div = (STOP_SIZE/START_SIZE);
+  int iter = (int)log_2(div) + 1;
   printf("iter: %d \n", iter);
   int *testr = (int *)malloc(64*MB * sizeof(int)); 
   int steps = 64 * 1024 * 1024; 
@@ -225,93 +225,6 @@ int main(){
     printf("Time: %lf \n", time);
     printf("Average time per element: %lf us\n", (double)(time/(double)steps) * 1000);
   }
-/*
-  int number_of_CL = L1SIZE/line_size;
-  printf("[INFO] The number of cache lines in L1 is: %d lines \n", number_of_CL);
-
-  printf("Lets create an array with this 32x the number of lines in our L1\n");
-
-  int *testr = (int *)malloc(number_of_CL * 32 * sizeof(int));
-  long long unsigned int time_diff = 0;
-  long long unsigned int base_access = 0;
-  printf("Now let us try to read one of these lines from memory and measure it's latency\n"); 
-  struct timespec start, end;
-
-  clock_gettime(CLOCK_MONOTONIC, &start);
-  array[0] = 0;
-  clock_gettime(CLOCK_MONOTONIC, &end);
-  base_access = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-
-  printf("This access took %llu nanoseconds\n", time_diff);
-
-  printf("Okay that good, lets read it again to see if it is shorter now\n");
-  clock_gettime(CLOCK_MONOTONIC, &start);
-  array[0] = 1;
-  clock_gettime(CLOCK_MONOTONIC, &end);
-  time_diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-  printf("This access took %llu nanoseconds\n", time_diff);
-  printf("Okay that is working as we expect \n \n");
-
-  printf("Now lets read the remainder of the first cache line to see if it behaves as we expect\n");
-  printf("---------------------------------------------\n");
-  printf("|     INDEX      Access Time (ns)     | \n");
-  printf("|     %d       %llu     | \n", 0, base_access);
-  for(int i = 1; i < line_size/4; i++){
-      clock_gettime(CLOCK_MONOTONIC, &start);
-      array[i] = 1;
-      clock_gettime(CLOCK_MONOTONIC, &end);
-      time_diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-      
-      
-      printf("|     %d       %llu     | \n", i, time_diff);
-  }
-
-  printf("Now that works great, we can see that all the remaining accesses hit in the L1 cache \n");
-  printf("Pulling the next index should need to be fetched from memory, lets tests this: \n");
-  clock_gettime(CLOCK_MONOTONIC, &start);
-  array[16] = 1;
-  clock_gettime(CLOCK_MONOTONIC, &end);
-  base_access = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-  printf("This access took %llu nanoseconds\n", base_access);
-
-  printf("Pulling the remainder of the cache line\n");
-  printf("---------------------------------------------\n");
-  printf("|     INDEX      Access Time (ns)     | \n");
-  printf("|     %d       %llu     | \n", 16, base_access);
-  for(int i = 1; i < line_size/4; i++){
-      clock_gettime(CLOCK_MONOTONIC, &start);
-      array[i+16] = 1;
-      clock_gettime(CLOCK_MONOTONIC, &end);
-      time_diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-      
-      
-      printf("|     %d       %llu     | \n", i+16, time_diff);
-  }
-
-  /*for (int j = 2; j< number_of_CL;j++){ 
-    printf("------------ cacheline %d -----------------\n", j);
-    for(int i = 0; i < line_size/4; i++){
-        clock_gettime(CLOCK_MONOTONIC, &start);
-        array[i+16*j] = 1;
-        clock_gettime(CLOCK_MONOTONIC, &end);
-        time_diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-        
-        
-        printf("|     %d       %llu     | \n", i+16*j, time_diff);
-    }
-  }
-  printf("Now lets pull a random cache line far ahead \n");
-  int test_num = 403;
-  printf("------------ cacheline %d -----------------\n", test_num);
-    for(int i = 0; i < line_size/4; i++){
-        clock_gettime(CLOCK_MONOTONIC, &start);
-        array[i+16*test_num] = 1;
-        clock_gettime(CLOCK_MONOTONIC, &end);
-        time_diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-        
-        
-        printf("|     %d       %llu     | \n", i+16*test_num, time_diff);
-    }*/
   free(testr);
 
   // Add your code here, and comment above
