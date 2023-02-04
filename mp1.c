@@ -222,7 +222,7 @@ int main(){
 
   printf("This access took %llu nanoseconds\n", time_diff);
 
-  printf("Okay that good, lets read it again to see if it is shorter now\n", time_diff);
+  printf("Okay that good, lets read it again to see if it is shorter now\n");
   clock_gettime(CLOCK_MONOTONIC, &start);
   array[0] = 1;
   clock_gettime(CLOCK_MONOTONIC, &end);
