@@ -77,10 +77,10 @@ double LineSizeTest(void)
   }
   double retval = 0.0;
   for(int i = 0; i<num_steps-1; i++){
-    printf("Percent diff between %lf and %lf is %lf \n", retvec[i], retvec[i+1], PercentDiff(retvec[i], retvec[i+1]));
+    //printf("Percent diff between %lf and %lf is %lf \n", retvec[i], retvec[i+1], PercentDiff(retvec[i], retvec[i+1]));
       if(PercentDiff(retvec[i], retvec[i+1]) < .3){
-        retval = i+1;
-        printf("Not Different at %d\n", i+1);
+        retval = pow(2.0,(double)i+1);
+        //printf("Not Different at %d\n", i+1);
       }
   }
  
@@ -118,8 +118,6 @@ int main(){
   
   printf("Starting Test:\n");
   int line_size = (int)LineSizeTest();
-  int int_size = (int)sizeof(int);
-  printf("int size: %d \n", int_size);
   printf("[INFO] Cache Line Size: %d bytes \n", line_size);
 
   // Add your code here, and comment above
