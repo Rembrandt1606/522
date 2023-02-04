@@ -6,6 +6,7 @@
 #define ITER   10
 #define MAX_N 64*1024*1024 
 #define MB    (1024*1024)
+#define KB  1024
 // LLC Parameters assumed
 #define START_SIZE 1*MB
 #define STOP_SIZE  16*MB
@@ -44,6 +45,10 @@ double DummyTest(void)
 double PercentDiff(double x, double y){
   return (abs(x-y)/((x+y)/2))*100;
 }
+
+double log_2(double x){
+  return (log(x)/log(2));
+}
 /////////////////////////////////////////////////////////
 // Change this, including input parameters
 /////////////////////////////////////////////////////////
@@ -60,8 +65,6 @@ double LineSizeTest(void)
         array[k] = 5;
       }
   gettimeofday(&t2, NULL);
-  //printf("[INFO] elapsedTime for memory warm up is: %lf ms \n", elapsedTime(t1,t2));
- // printf("----------------------------------------------------- \n");
   for(int i = 0; i<num_steps; i++){
     
     double val = pow(2.0,(double) i);
@@ -91,8 +94,12 @@ double LineSizeTest(void)
 /////////////////////////////////////////////////////////
 // Change this, including input parameters
 /////////////////////////////////////////////////////////
-double CacheSizeTest(void)
+double CacheSizeTest(int line_size)
 {    
+
+  double start_size = KB;
+  double max_iter = log_2((MAX_N/start_size));
+  print("Max number of steps is: %lf \n", max_iter);
   double retval;
   return retval; 
 }
@@ -119,7 +126,7 @@ int main(){
   printf("Starting Test:\n");
   int line_size = (int)LineSizeTest();
   printf("[INFO] Cache Line Size: %d bytes \n", line_size);
-
+  double testr = CacheSizeTest(line_size); 
   // Add your code here, and comment above
 }
 /////////////////////////////////////////////////////////
