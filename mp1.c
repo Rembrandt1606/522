@@ -123,7 +123,7 @@ double CacheSizeTest(int line_size)
     for (int j=0; j<current_size; j+=line_size)
     {
         clock_gettime(CLOCK_MONOTONIC, &start);
-        array[j] += rand();
+        array[j] += 1;
         clock_gettime(CLOCK_MONOTONIC, &end);
         run_sum += BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
         num_iters++;
