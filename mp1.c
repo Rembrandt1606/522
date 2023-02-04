@@ -97,10 +97,33 @@ double LineSizeTest(void)
 double CacheSizeTest(int line_size)
 {    
 
-  double start_size = KB;
-  int max_iter = (int)log_2((MAX_N/start_size));
+  int current_size = 0;
+  int max_iter = (int)log_2((MAX_N/KB));
+  double *retvec = (double *)calloc(max_iter, sizeof(double));
+  struct timeval t1, t2;
   printf("[INFO] Max number of steps is: %d \n", max_iter);
+
+  for(int i = 0; i<max_iter; i++){
+    
+    current_size = KB * i+1;
+    // Pre-cache array
+    for (int j=0; j<current_size; j+=line_size)
+    {
+        array[j] = 0;
+    }
+
+    gettimeofday(&t1, NULL);
+    for (int j=0; j<current_size; j+=line_size)
+    {
+        array[j] = 0;
+    }
+
+    printf("[INFO] At step size %d elapsedTime is: %lf ms \n", current_size, elapsedTime(t1,t2));
+    retvec[i] = elapsedTime(t1,t2);
+  }
+
   double retval;
+  free(retvec);
   return retval; 
 }
 /////////////////////////////////////////////////////////
