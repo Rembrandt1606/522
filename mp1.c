@@ -128,7 +128,7 @@ double CacheSizeTest(int line_size)
         num_iters++;
     }
     gettimeofday(&t2, NULL);
-    print("----------------------------------------------------------- \n \n");
+    printf("----------------------------------------------------------- \n \n");
     printf("[INFO] At step size %d elapsedTime is: %lf ms \n", current_size, elapsedTime(t1,t2));
     printf("[INFO] The total runtime is: %llu nanoseconds \n", (run_sum));
 
