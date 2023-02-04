@@ -57,7 +57,7 @@ double LineSizeTest(void)
       }
   gettimeofday(&t2, NULL);
   printf("[INFO] elapsedTime for warm up is: %lf ms \n", elapsedTime(t1,t2));
-  printf("------------------------------------------");
+  printf("------------------------------------------ \n");
   for(int i = 0; i<num_steps; i++){
     
     double val = pow(2.0,(double) i);
@@ -68,7 +68,7 @@ double LineSizeTest(void)
         array[k] *= 2;
       }
     gettimeofday(&t2, NULL);
-    printf("[INFO] At iter %d elapsedTime is: %lf ms \n", i, elapsedTime(t1,t2));
+    printf("[INFO] At step size %d elapsedTime is: %lf ms \n", val, elapsedTime(t1,t2));
   }
   /*
     struct timespec start, end;
