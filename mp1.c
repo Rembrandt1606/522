@@ -5,6 +5,7 @@
 #include <math.h>
 #define ITER   10
 #define MAX_N 64*1024*1024 
+#define MAX_ARR 1024*1024*1024 
 #define MB    (1024*1024)
 #define KB  1024
 // LLC Parameters assumed
@@ -12,7 +13,7 @@
 #define STOP_SIZE  16*MB
 #define SIZE 128
 #define BILLION 1000000000L
-char array[MAX_N];
+char array[MAX_ARR];
 /////////////////////////////////////////////////////////
 // Provides elapsed Time between t1 and t2 in milli sec
 /////////////////////////////////////////////////////////
@@ -98,7 +99,7 @@ double CacheSizeTest(int line_size)
 {    
 
   int current_size = 0;
-  int max_iter = (int)log_2((MAX_N/KB)) + 1;
+  int max_iter = (int)log_2((MAX_ARR/KB)) + 1;
   double *retvec = (double *)calloc(max_iter, sizeof(double));
   struct timeval t1, t2;
   printf("[INFO] Max number of steps is: %d \n", max_iter);
