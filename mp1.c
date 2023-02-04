@@ -60,6 +60,7 @@ double LineSizeTest(void)
             diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
             printf("elapsedTime is: %llu nS \n", (long long unsigned int) diff);
         }
+      printf("_______________________________________________ \n");
 
     }
     //for(int i = 0; i<10; i++){
