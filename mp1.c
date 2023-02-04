@@ -77,7 +77,7 @@ double LineSizeTest(void)
   }
   double retval = 0.0;
   for(int i = 0; i<num_steps-1; i++){
-    //printf("Percent diff between %lf and %lf is %lf \n", retvec[i], retvec[i+1], PercentDiff(retvec[i], retvec[i+1]));
+    printf("Percent diff between %lf and %lf is %lf \n", retvec[i], retvec[i+1], PercentDiff(retvec[i], retvec[i+1]));
       if(PercentDiff(retvec[i], retvec[i+1]) < .3){
         retval = i+1;
         //printf("Not Different\n");
