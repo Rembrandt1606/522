@@ -60,8 +60,8 @@ double LineSizeTest(void)
         array[k] = 5;
       }
   gettimeofday(&t2, NULL);
-  printf("[INFO] elapsedTime for memory warm up is: %lf ms \n", elapsedTime(t1,t2));
-  printf("----------------------------------------------------- \n");
+  //printf("[INFO] elapsedTime for memory warm up is: %lf ms \n", elapsedTime(t1,t2));
+ // printf("----------------------------------------------------- \n");
   for(int i = 0; i<num_steps; i++){
     
     double val = pow(2.0,(double) i);
@@ -72,18 +72,20 @@ double LineSizeTest(void)
         array[k] *= 2;
       }
     gettimeofday(&t2, NULL);
-    printf("[INFO] At step size %d elapsedTime is: %lf ms \n", iter, elapsedTime(t1,t2));
+    //printf("[INFO] At step size %d elapsedTime is: %lf ms \n", iter, elapsedTime(t1,t2));
     retvec[i] = elapsedTime(t1,t2);
   }
+  double retval = 0.0;
   for(int i = 0; i<num_steps-1; i++){
-    printf("Percent diff between %lf and %lf is %lf \n", retvec[i], retvec[i+1], PercentDiff(retvec[i], retvec[i+1]));
+    //printf("Percent diff between %lf and %lf is %lf \n", retvec[i], retvec[i+1], PercentDiff(retvec[i], retvec[i+1]));
       if(PercentDiff(retvec[i], retvec[i+1]) < .3){
-        printf("is diff\n");
+        retval = i+1;
+        //printf("Not Different\n");
       }
   }
  
     free(retvec);
-    double retval = 0.0;
+    
   return retval; 
 }
 /////////////////////////////////////////////////////////
@@ -115,7 +117,8 @@ double CacheAssocTest(void)
 int main(){
   
   printf("Starting Test:\n");
-  printf("Test took %lf seconds\n", LineSizeTest()/1000.0);
+  int line_size = (int)LineSizeTest();
+  printf("[INFO] Cache Line Size: %d \n", line_size);
 
   // Add your code here, and comment above
 }
