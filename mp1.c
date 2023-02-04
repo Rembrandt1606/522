@@ -40,6 +40,10 @@ double DummyTest(void)
  
   return elapsedTime(t1,t2);
 }
+
+double PercentDiff(double x, double y){
+  return (abs(x-y)/((x+y)/2))*100;
+}
 /////////////////////////////////////////////////////////
 // Change this, including input parameters
 /////////////////////////////////////////////////////////
@@ -56,8 +60,8 @@ double LineSizeTest(void)
         array[k] = 5;
       }
   gettimeofday(&t2, NULL);
-  printf("[INFO] elapsedTime for warm up is: %lf ms \n", elapsedTime(t1,t2));
-  printf("------------------------------------------ \n");
+  printf("[INFO] elapsedTime for memory warm up is: %lf ms \n", elapsedTime(t1,t2));
+  printf("----------------------------------------------------- \n");
   for(int i = 0; i<num_steps; i++){
     
     double val = pow(2.0,(double) i);
@@ -69,32 +73,15 @@ double LineSizeTest(void)
       }
     gettimeofday(&t2, NULL);
     printf("[INFO] At step size %d elapsedTime is: %lf ms \n", iter, elapsedTime(t1,t2));
+    retvec[i] = elapsedTime(t1,t2);
   }
-  /*
-    struct timespec start, end;
-    int *vec = (int *)malloc(sizeof(int) * SIZE);
-    double *retvec = (double *)calloc(sizeof(int) * SIZE, sizeof(double));
-    int val;
-    u_int64_t diff;
-    for(int i = 0; i<SIZE; i++)
-    {
-    clock_gettime(CLOCK_MONOTONIC, &start);
-    val = vec[i] * 3;
-    clock_gettime(CLOCK_MONOTONIC, &end);
-    diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-    printf("[INFO] At iter %d elapsedTime is: %llu nS \n", i+1, (long long unsigned int) diff);
-        //for(int j = 0; j<sizeof(int); j++) {
-            
-        //}
-    printf("_______________________________________________ \n");
-
-    }
-    //for(int i = 0; i<10; i++){
-    //   printf("Time at %d iteration %lf \n", i, retvec[i]);
-   // }
-    free(vec);
-    free(retvec);
-    */
+  for(int i = 0; i<num_steps-1; i++){
+    printf("Percent diff between %lf and %lf is %lf", retvec[i], retvec[i+1], PercentDiff(retvec[i], retvec[i+1]));
+      if(PercentDiff(retvec[i], retvec[i+1]) < .3){
+        printf("is diff\n");
+      }
+  }
+ 
     free(retvec);
     double retval = 0.0;
   return retval; 
