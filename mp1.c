@@ -206,7 +206,7 @@ int main(){
   //double testr = CacheSizeTest(line_size); 
   int *testr = (int *)malloc(1*KB * sizeof(int));  
   int steps = 64 * 1024 * 1024; 
-  int lengthMod = MAX_N - 1;
+  int lengthMod = 1*KB - 1;
   long long unsigned int time_diff = 0;
   double time;
   struct timeval t1, t2;
