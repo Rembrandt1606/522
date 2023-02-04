@@ -52,9 +52,10 @@ double LineSizeTest(void)
   for(int i = 0; i<num_steps; i++){
     struct timeval t1, t2;
     double val = pow(2.0,(double) i);
-    printf("[INFO] val is %lf \n", val);
+    int iter = (int)val;
+    printf("[INFO] val is %d \n", iter);
     gettimeofday(&t1, NULL);
-    for(int k=0; k< MAX_N; k+=(int)val)
+    for(int k=0; k< MAX_N; k+=iter)
       {
         array[k] += rand();
       }
