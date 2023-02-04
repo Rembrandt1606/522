@@ -122,7 +122,7 @@ double CacheSizeTest(int line_size)
   long long unsigned int run_sum = 0;
   printf("[INFO] Max number of steps is: %d \n", max_iter);
   
-  for(int i = 0; i<1; i++){
+  for(int i = 0; i<max_iter; i++){
     
     current_size = KB * (int)pow(2.0,i);
     num_iters = 0;
@@ -133,7 +133,7 @@ double CacheSizeTest(int line_size)
      for (int ii = MAX_ARR-1; ii > MAX_ARR - num_accesses - 1; ii--) { // for loop to shuffle
          access = rand() % (ii + 1); //randomise j for shuffle with Fisher Yates
          array[access] = 0;
-         printf("[INFO] Access at: %d \n", access);
+         //printf("[INFO] Access at: %d \n", access);
     }
 
     srand(1);
@@ -141,7 +141,7 @@ double CacheSizeTest(int line_size)
     for (int ii = MAX_ARR-1; ii > MAX_ARR - num_accesses - 1; ii--)
     {
         access = rand() % (ii + 1); 
-        printf("[INFO] Accessing at %d index \n", access);
+        //printf("[INFO] Accessing at %d index \n", access);
         clock_gettime(CLOCK_MONOTONIC, &start);
         array[ii] += 1;
         clock_gettime(CLOCK_MONOTONIC, &end);
