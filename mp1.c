@@ -48,8 +48,8 @@ double LineSizeTest(void)
     struct timespec start, end;
     int *vec = (int *)malloc(sizeof(int) * SIZE);
     double *retvec = (double *)calloc(sizeof(int) * SIZE, sizeof(double));
-    uint8_t byte;
-    uint64_t diff;
+    u_int8_t byte;
+    u_int64_t diff;
 
     for(int i = 0; i<SIZE; i++)
     {
