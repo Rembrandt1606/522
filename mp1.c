@@ -215,7 +215,8 @@ int main(){
   double time;
   struct timeval t1, t2;
   // start timer
-  for (int j = 0; j<iter; j++){
+  for (int j = 0; j<iter; j++) {
+    printf("at iter %d \n", iter);
     size = pow(2,j)*START_SIZE - 1;
     gettimeofday(&t1, NULL);
     for(int i = 0; i<steps;i++){
@@ -226,6 +227,7 @@ int main(){
     printf("Time: %lf \n", time);
     printf("Average time per element: %lf us\n", (double)(time/(double)steps) * 1000);
   }
+  
   free(testr);
 
   // Add your code here, and comment above
