@@ -80,7 +80,7 @@ double LineSizeTest(void)
     printf("Percent diff between %lf and %lf is %lf \n", retvec[i], retvec[i+1], PercentDiff(retvec[i], retvec[i+1]));
       if(PercentDiff(retvec[i], retvec[i+1]) < .3){
         retval = i+1;
-        //printf("Not Different\n");
+        printf("Not Different at %d\n", i+1);
       }
   }
  
