@@ -117,8 +117,8 @@ double CacheAssocTest(void)
 int main(){
   
   printf("Starting Test:\n");
-  int line_size = (int)LineSizeTest();
-  printf("[INFO] Cache Line Size: %d bytes \n", line_size * sizeof(int));
+  int line_size = (int)pow(2.0,LineSizeTest());
+  printf("[INFO] Cache Line Size: %d bytes \n", line_size);
 
   // Add your code here, and comment above
 }
