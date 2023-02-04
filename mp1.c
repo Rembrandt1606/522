@@ -105,7 +105,7 @@ double CacheSizeTest(int line_size)
 
   for(int i = 0; i<max_iter; i++){
     
-    current_size = KB * (i+1);
+    current_size = KB * (int)pow(2.0,i);
     // Pre-cache array
     for (int j=0; j<current_size; j+=line_size)
     {
