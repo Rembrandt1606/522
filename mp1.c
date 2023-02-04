@@ -6,15 +6,14 @@
 #include<unistd.h>
 #define ITER   10
 #define MAX_N 64*1024*1024 
-#define MAX_ARR 1024*1024*1024 
+#define MAX_ARR 64*1024*1024 
 #define MB    (1024*1024)
-#define KB  1024
+#define KB (1*1024)
 // LLC Parameters assumed
 #define START_SIZE 256*KB
-#define STOP_SIZE  64*MB
+#define STOP_SIZE  1024*MB
 #define SIZE 128
 #define BILLION 1000000000L
-#define L1SIZE 32*KB
 char array[MAX_ARR];
 // Provides elapsed Time between t1 and t2 in milli sec
 
@@ -209,7 +208,7 @@ int main(){
   int iter = (int)log_2(div) + 1;
   int size = 0;
   printf("iter: %d \n", iter);
-  int *testr = (int *)malloc(64*MB * sizeof(int)); 
+  int *testr = (int *)malloc(1024*MB * sizeof(int)); 
   int steps = 64 * 1024 * 1024; 
   int lengthMod = 0;
   long long unsigned int time_diff = 0;
