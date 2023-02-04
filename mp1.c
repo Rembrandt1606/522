@@ -112,6 +112,7 @@ double CacheSizeTest(int line_size)
     current_size = KB * (int)pow(2.0,i);
     num_iters = 0;
     run_sum = 0;
+    
     // Pre-cache array addresses, not that large array sizes will no fit
     for (int j=0; j<current_size; j+=line_size)
     {
@@ -129,9 +130,9 @@ double CacheSizeTest(int line_size)
     }
     gettimeofday(&t2, NULL);
     printf("----------------------------------------------------------- \n \n");
-    printf("[INFO] At step size %d elapsedTime is: %lf ms \n", current_size, elapsedTime(t1,t2));
-    printf("[INFO] The total runtime is: %llu nanoseconds \n", (run_sum));
-
+    printf("[INFO] ElapsedTime is: %lf ms \n", elapsedTime(t1,t2));
+    printf("[INFO] The total runtime is: %llu nanoseconds \n", run_sum);
+    printf("[INFO] The number of element accessed is: %d nanoseconds \n", num_iters);
     printf("[INFO] The average access time is: %llu nanoseconds \n", (run_sum/num_iters));
     retvec[i] = elapsedTime(t1,t2);
   }
