@@ -57,7 +57,7 @@ double LineSizeTest(void)
     gettimeofday(&t1, NULL);
     for(int k=0; k< MAX_N; k+=iter)
       {
-        array[k] += rand();
+        array[k] *= 2;
       }
     gettimeofday(&t2, NULL);
     printf("[INFO] At iter %d elapsedTime is: %lf S \n", i, elapsedTime(t1,t2));
