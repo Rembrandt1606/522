@@ -228,7 +228,23 @@ int main(){
   clock_gettime(CLOCK_MONOTONIC, &end);
   time_diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
   printf("This access took %llu nanoseconds\n", time_diff);
+  printf("Okay that is working as we expect \n \n \n");
+  sleep(2);
+
+  printf("Now lets read the remainder of the first cache line to see if it behaves as we expect\n");
+  for(int i = 1; i < line_size/4; i++){
+      printf("---------------------------------------------\n");
+      clock_gettime(CLOCK_MONOTONIC, &start);
+      array[i] = 1;
+      clock_gettime(CLOCK_MONOTONIC, &end);
+      time_diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+      
+      printf("|     INDEX      |      Access Time (ns)     | \n");
+      printf("|     %d      |      %llu     | \n", i, time_diff);
+      printf("---------------------------------------------\n");
+  }
   free(testr);
+
   // Add your code here, and comment above
 }
 /////////////////////////////////////////////////////////
