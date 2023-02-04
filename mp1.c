@@ -105,7 +105,7 @@ double CacheSizeTest(int line_size)
 
   for(int i = 0; i<max_iter; i++){
     
-    current_size = KB * i+1;
+    current_size = KB * (i+1);
     // Pre-cache array
     for (int j=0; j<current_size; j+=line_size)
     {
@@ -117,7 +117,7 @@ double CacheSizeTest(int line_size)
     {
         array[j] = 0;
     }
-
+    gettimeofday(&t2, NULL);
     printf("[INFO] At step size %d elapsedTime is: %lf ms \n", current_size, elapsedTime(t1,t2));
     retvec[i] = elapsedTime(t1,t2);
   }
