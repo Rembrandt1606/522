@@ -203,8 +203,23 @@ int main(){
   printf("Starting Test:\n");
   int line_size = (int)LineSizeTest();
   printf("[INFO] Cache Line Size: %d bytes \n", line_size);
-  //double testr = CacheSizeTest(line_size);  
-
+  //double testr = CacheSizeTest(line_size); 
+  int *testr = (int *)malloc(1*KB * sizeof(int));  
+  int steps = 64 * 1024 * 1024; 
+  int lengthMod = MAX_N - 1;
+  long long unsigned int time_diff = 0;
+  double time;
+  struct timeval t1, t2;
+  // start timer
+  gettimeofday(&t1, NULL);
+  for(int i = 0; i<steps;i++){
+    testr[(i * 16) & lengthMod]++;
+  }
+  gettimeofday(&t2, NULL);
+  time = elapsedTime(t1,t2);
+  printf("Time: %lf \n", time);
+  printf("Average time per element: %lf \n", (double)(time/(double)steps));
+/*
   int number_of_CL = L1SIZE/line_size;
   printf("[INFO] The number of cache lines in L1 is: %d lines \n", number_of_CL);
 
@@ -278,7 +293,7 @@ int main(){
         
         printf("|     %d       %llu     | \n", i+16*j, time_diff);
     }
-  }*/
+  }
   printf("Now lets pull a random cache line far ahead \n");
   int test_num = 403;
   printf("------------ cacheline %d -----------------\n", test_num);
@@ -290,9 +305,8 @@ int main(){
         
         
         printf("|     %d       %llu     | \n", i+16*test_num, time_diff);
-    }
+    }*/
   free(testr);
-
 
   // Add your code here, and comment above
 }
