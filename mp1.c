@@ -119,9 +119,7 @@ double CacheSizeTest(int line_size)
         array[j] = 0;
     }
 
-    //gettimeofday(&t1, NULL);
-    for (int k=0; k<3; k++)
-    {
+    gettimeofday(&t1, NULL);
     for (int j=0; j<current_size; j+=line_size)
     {
         clock_gettime(CLOCK_MONOTONIC, &start);
@@ -130,14 +128,14 @@ double CacheSizeTest(int line_size)
         run_sum += BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
         num_iters++;
     }
-    }
-    //gettimeofday(&t2, NULL);
+
+    gettimeofday(&t2, NULL);
     printf("----------------------------------------------------------- \n \n");
-    //printf("[INFO] ElapsedTime is: %lf ms \n", elapsedTime(t1,t2));
-    printf("[INFO] The average runtime is: %llu nanoseconds \n", (run_sum/3));
+    printf("[INFO] ElapsedTime is: %lf ms \n", elapsedTime(t1,t2));
+    /*printf("[INFO] The average runtime is: %llu nanoseconds \n", (run_sum/3));
     printf("[INFO] The number of element accessed is: %d \n", num_iters);
     printf("[INFO] The address range is: %d bytes \n", (num_iters/3)*line_size);
-    printf("[INFO] The average access time is: %llu nanoseconds \n", (run_sum/num_iters));
+    printf("[INFO] The average access time is: %llu nanoseconds \n", (run_sum/num_iters));*/
     retvec[i] = elapsedTime(t1,t2);
   }
 
