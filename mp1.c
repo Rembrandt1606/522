@@ -229,8 +229,7 @@ int main(){
   clock_gettime(CLOCK_MONOTONIC, &end);
   time_diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
   printf("This access took %llu nanoseconds\n", time_diff);
-  printf("Okay that is working as we expect \n \n \n");
-  sleep(2);
+  printf("Okay that is working as we expect \n \n");
 
   printf("Now lets read the remainder of the first cache line to see if it behaves as we expect\n");
   printf("---------------------------------------------\n");
@@ -244,7 +243,16 @@ int main(){
       
       printf("|     %d       %llu     | \n", i, time_diff);
   }
+
+  printf("Now that works great, we can see that all the remaining accesses hit in the L1 cache \n");
+  printf("Pulling hte next index should need to be fetched from memory, lets tests this \n");
+  clock_gettime(CLOCK_MONOTONIC, &start);
+  array[16] = 1;
+  clock_gettime(CLOCK_MONOTONIC, &end);
+  time_diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+  printf("This access took %llu nanoseconds\n", time_diff);
   free(testr);
+
 
   // Add your code here, and comment above
 }
