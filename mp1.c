@@ -53,6 +53,7 @@ double LineSizeTest(void)
             gettimeofday(&t1, NULL);
             byte = (vec[i] >> (8*j)) & 0xff;
             gettimeofday(&t2, NULL);
+            printf("elapsedTime is: %lf \n", elapsedTime(t1,t2));
             retvec[i + j] = elapsedTime(t1,t2);
         }
 
