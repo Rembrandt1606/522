@@ -209,7 +209,7 @@ int main(){
 
   printf("Lets create an array with this 32x the number of lines in our L1\n");
 
-  int *testr = (double *)malloc(number_of_CL * 32 * sizeof(int));
+  int *testr = (int *)malloc(number_of_CL * 32 * sizeof(int));
   long long unsigned int time_diff = 0;
   printf("int *testr = (double *)malloc(number_of_CL * 8 * sizeof(int));\n");
   printf("Lets create an array with this 8x the number of lines in our L1\n");
