@@ -204,8 +204,9 @@ int main(){
   int line_size = (int)LineSizeTest();
   printf("[INFO] Cache Line Size: %d bytes \n", line_size);
   //double testr = CacheSizeTest(line_size); 
-  long div = (STOP_SIZE/START_SIZE);
+  long div = (STOP_SIZE/START_SIZE) -1;
   int iter = (int)log_2(div) + 1;
+  int size = 0;
   printf("iter: %d \n", iter);
   int *testr = (int *)malloc(64*MB * sizeof(int)); 
   int steps = 64 * 1024 * 1024; 
@@ -215,10 +216,10 @@ int main(){
   struct timeval t1, t2;
   // start timer
   for (int j = 0; j<iter; j++){
-    lengthMod = pow(2,j)*MB - 1;
+    size = pow(2,j)*START_SIZE - 1;
     gettimeofday(&t1, NULL);
     for(int i = 0; i<steps;i++){
-      testr[(i * 16) & lengthMod]++;
+      testr[(i * 16) % size]++;
     }
     gettimeofday(&t2, NULL);
     time = elapsedTime(t1,t2);
