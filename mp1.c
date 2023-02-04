@@ -5,7 +5,7 @@
 #include <math.h>
 #define ITER   10
 #define MAX_N 64*1024*1024 
-#define MAX_ARR 1024*1024*1024 
+#define MAX_ARR 54*1024*1024 
 #define MB    (1024*1024)
 #define KB  1024
 // LLC Parameters assumed
