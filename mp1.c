@@ -9,7 +9,7 @@
 // LLC Parameters assumed
 #define START_SIZE 1*MB
 #define STOP_SIZE  16*MB
-#define SIZE 64
+#define SIZE 8
 #define BILLION 1000000000L
 char array[MAX_N];
 /////////////////////////////////////////////////////////
@@ -48,19 +48,19 @@ double LineSizeTest(void)
     struct timespec start, end;
     int *vec = (int *)malloc(sizeof(int) * SIZE);
     double *retvec = (double *)calloc(sizeof(int) * SIZE, sizeof(double));
-    u_int8_t byte;
+    int val;
     u_int64_t diff;
-
     for(int i = 0; i<SIZE; i++)
     {
-        for(int j = 0; j<sizeof(int); j++) {
-            clock_gettime(CLOCK_MONOTONIC, &start);
-            byte = (vec[i] >> (8*j)) & 0xff;
-            clock_gettime(CLOCK_MONOTONIC, &end);
-            diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-            printf("elapsedTime is: %llu nS \n", (long long unsigned int) diff);
-        }
-      printf("_______________________________________________ \n");
+    clock_gettime(CLOCK_MONOTONIC, &start);
+    val = vec[i];
+    clock_gettime(CLOCK_MONOTONIC, &end);
+    diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+    printf("elapsedTime is: %llu nS \n", (long long unsigned int) diff);
+        //for(int j = 0; j<sizeof(int); j++) {
+            
+        //}
+    printf("_______________________________________________ \n");
 
     }
     //for(int i = 0; i<10; i++){
