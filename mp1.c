@@ -199,7 +199,11 @@ int main(){
   printf("Starting Test:\n");
   int line_size = (int)LineSizeTest();
   printf("[INFO] Cache Line Size: %d bytes \n", line_size);
-  double testr = CacheSizeTest(line_size); 
+  //double testr = CacheSizeTest(line_size); 
+
+  int d = rand() % (314526644);
+  int f = d/16;
+  printf("[INFO] f is: %d \n", f); 
   // Add your code here, and comment above
 }
 /////////////////////////////////////////////////////////
