@@ -267,7 +267,7 @@ int main(){
       printf("|     %d       %llu     | \n", i+16, time_diff);
   }
 
-  for (int j = 2; j< number_of_CL;j++){ 
+  for (int j = 2; j< number_of_CL + 1;j++){ 
     printf("------------ cacheline %d -----------------\n", j);
     for(int i = 0; i < line_size/4; i++){
         clock_gettime(CLOCK_MONOTONIC, &start);
