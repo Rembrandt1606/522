@@ -68,7 +68,7 @@ double LineSizeTest(void)
         array[k] *= 2;
       }
     gettimeofday(&t2, NULL);
-    printf("[INFO] At step size %d elapsedTime is: %lf ms \n", val, elapsedTime(t1,t2));
+    printf("[INFO] At step size %d elapsedTime is: %lf ms \n", iter, elapsedTime(t1,t2));
   }
   /*
     struct timespec start, end;
