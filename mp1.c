@@ -3,6 +3,7 @@
 #include <sys/time.h>
 #include <time.h>
 #include <math.h>
+#include<unistd.h>
 #define ITER   10
 #define MAX_N 64*1024*1024 
 #define MAX_ARR 1024*1024*1024 
