@@ -206,6 +206,24 @@ int main(){
 
   int number_of_CL = L1SIZE/line_size;
   printf("[INFO] The number of cache lines in L1 is: %d lines \n", number_of_CL);
+
+  printf("Lets create an array with this 32x the number of lines in our L1\n");
+
+  int *testr = (double *)malloc(number_of_CL * 32 * sizeof(int));
+  long long unsigned int time_diff = 0;
+  printf("int *testr = (double *)malloc(number_of_CL * 8 * sizeof(int));\n");
+  printf("Lets create an array with this 8x the number of lines in our L1\n");
+
+  printf("Lets read one of these lines from memory and measure it latency\n"); 
+  struct timespec start, end;
+
+  clock_gettime(CLOCK_MONOTONIC, &start);
+  array[0] = 0;
+  clock_gettime(CLOCK_MONOTONIC, &end);
+  time_diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+
+  printf("This access took %d nanoseconds\n", time_diff);
+  free(testr);
   // Add your code here, and comment above
 }
 /////////////////////////////////////////////////////////
