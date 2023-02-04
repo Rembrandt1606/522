@@ -51,15 +51,12 @@ double LineSizeTest(void)
 
   for(int i = 0; i<num_steps; i++){
     struct timeval t1, t2;
-
+    double val = pow(2.0,(double) i);
     gettimeofday(&t1, NULL);
-    for(int j=0;j<ITER;j++)
-    {
-      for(int k=0; k< MAX_N; k++)
+    for(int k=0; k< MAX_N; k+=(int)val)
       {
         array[k] += rand();
       }
-    }
     gettimeofday(&t2, NULL);
     printf("[INFO] At iter %d elapsedTime is: %lf S \n", i, elapsedTime(t1,t2));
   }
