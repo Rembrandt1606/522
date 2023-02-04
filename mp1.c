@@ -118,7 +118,9 @@ int main(){
   
   printf("Starting Test:\n");
   int line_size = (int)LineSizeTest();
-  printf("[INFO] Cache Line Size: %d bytes \n", line_size * 8);
+  int int_size = (int)sizeof(int);
+  printf("int size: %d \n", int_size);
+  printf("[INFO] Cache Line Size: %d bytes \n", line_size * 16);
 
   // Add your code here, and comment above
 }
