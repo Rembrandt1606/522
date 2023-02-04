@@ -111,7 +111,7 @@ double CacheSizeTest(int line_size)
 {    
 
   int current_size = 0;
-  int max_iter = (int)log_2((MAX_ARR/KB)) + 1;
+  int max_iter = (int)log_2((STOP_SIZE/KB)) + 1;
   double *retvec = (double *)calloc(max_iter, sizeof(double));
   int access;
   int num_accesses = 0;
@@ -133,7 +133,7 @@ double CacheSizeTest(int line_size)
     for (int ii = MAX_ARR-1; ii > MAX_ARR - num_accesses - 1; ii--) { // for loop to shuffle
         
         testr = rand() % (ii + 1); //randomise j for shuffle with Fisher Yates
-        access = (int)floor((testr/16.0));
+        access = (int)floor((testr/line_size));
         array[access] = 0;
         printf("[INFO] Access at: %d \n", access);
     }
@@ -143,8 +143,8 @@ double CacheSizeTest(int line_size)
     for (int ii = MAX_ARR-1; ii > MAX_ARR - num_accesses - 1; ii--)
     {
         testr = rand() % (ii + 1); //randomise j for shuffle with Fisher Yates
-        access = (int)floor((testr/16.0));
-        printf("[INFO] Accessing at %d index \n", access);
+        access = (int)floor((testr/line_size));
+        //printf("[INFO] Accessing at %d index \n", access);
         clock_gettime(CLOCK_MONOTONIC, &start);
         array[access] += 1;
         clock_gettime(CLOCK_MONOTONIC, &end);
