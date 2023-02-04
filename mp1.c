@@ -62,7 +62,7 @@ double LineSizeTest(void)
     }
     free(vec);
     free(retvec);
-    double retval;
+    double retval = 0.0;
   return retval; 
 }
 /////////////////////////////////////////////////////////
@@ -94,7 +94,8 @@ double CacheAssocTest(void)
 int main(){
   
   printf("Starting Test:\n");
-  printf("Test took %lf seconds\n", DummyTest()/1000.0);
+  printf("Test took %lf seconds\n", LineSizeTest()/1000.0);
+
   // Add your code here, and comment above
 }
 /////////////////////////////////////////////////////////
