@@ -11,7 +11,7 @@
 #define STOP_SIZE  16*MB
 #define SIZE 128
 #define BILLION 1000000000L
-char array[MAX_N];
+int array[MAX_N];
 /////////////////////////////////////////////////////////
 // Provides elapsed Time between t1 and t2 in milli sec
 /////////////////////////////////////////////////////////
