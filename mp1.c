@@ -204,7 +204,10 @@ int main(){
   int line_size = (int)LineSizeTest();
   printf("[INFO] Cache Line Size: %d bytes \n", line_size);
   //double testr = CacheSizeTest(line_size); 
-  int *testr = (int *)malloc(1*KB * sizeof(int));  
+   
+  int iter = (int)log_2((STOP_SIZE/START_SIZE)) + 1;
+  printf("iter: %d \n", iter);
+  int *testr = (int *)malloc(64*MB * sizeof(int)); 
   int steps = 64 * 1024 * 1024; 
   int lengthMod = 1*KB - 1;
   long long unsigned int time_diff = 0;
