@@ -5,7 +5,7 @@
 #include <math.h>
 #define ITER   10
 #define MAX_N 64*1024*1024 
-#define MAX_ARR 256*1024*1024 
+#define MAX_ARR 1024*1024*1024 
 #define MB    (1024*1024)
 #define KB  1024
 // LLC Parameters assumed
@@ -14,7 +14,6 @@
 #define SIZE 128
 #define BILLION 1000000000L
 char array[MAX_ARR];
-
 // Provides elapsed Time between t1 and t2 in milli sec
 
 double elapsedTime(struct timeval t1, struct timeval t2){
@@ -120,9 +119,10 @@ double CacheSizeTest(int line_size)
   struct timespec start, end;
   int num_iters;
   long long unsigned int run_sum = 0;
+  double testr = 0.0;
   printf("[INFO] Max number of steps is: %d \n", max_iter);
   
-  for(int i = 0; i<max_iter; i++){
+  for(int i = 0; i<2; i++){
     
     current_size = KB * (int)pow(2.0,i);
     num_iters = 0;
@@ -130,20 +130,23 @@ double CacheSizeTest(int line_size)
     num_accesses = current_size / line_size;
     // Pre-cache array addresses and ensure early address are cached
     srand(i+1);
-     for (int ii = MAX_ARR-1; ii > MAX_ARR - num_accesses - 1; ii--) { // for loop to shuffle
-         access = rand() % (ii + 1); //randomise j for shuffle with Fisher Yates
-         array[access] = 0;
-         //printf("[INFO] Access at: %d \n", access);
+    for (int ii = MAX_ARR-1; ii > MAX_ARR - num_accesses - 1; ii--) { // for loop to shuffle
+        
+        testr = rand() % (ii + 1); //randomise j for shuffle with Fisher Yates
+        access = (int)floor((testr/16.0));
+        array[access] = 0;
+        printf("[INFO] Access at: %d \n", access);
     }
 
     srand(i+1);
     gettimeofday(&t1, NULL);
     for (int ii = MAX_ARR-1; ii > MAX_ARR - num_accesses - 1; ii--)
     {
-        access = rand() % (ii + 1); 
-        //printf("[INFO] Accessing at %d index \n", access);
+        testr = rand() % (ii + 1); //randomise j for shuffle with Fisher Yates
+        access = (int)floor((testr/16.0));
+        printf("[INFO] Accessing at %d index \n", access);
         clock_gettime(CLOCK_MONOTONIC, &start);
-        array[ii] += 1;
+        array[access] += 1;
         clock_gettime(CLOCK_MONOTONIC, &end);
         run_sum += BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
         num_iters++;
