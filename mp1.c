@@ -98,8 +98,8 @@ double CacheSizeTest(int line_size)
 {    
 
   double start_size = KB;
-  double max_iter = log_2((MAX_N/start_size));
-  printf("Max number of steps is: %lf \n", max_iter);
+  int max_iter = (int)log_2((MAX_N/start_size));
+  printf("[INFO] Max number of steps is: %d \n", max_iter);
   double retval;
   return retval; 
 }
