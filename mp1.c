@@ -216,8 +216,9 @@ int main(){
   struct timeval t1, t2;
   // start timer
   for (int j = 0; j<iter; j++) {
-    printf("at iter %d \n", iter);
+    
     size = pow(2,j)*START_SIZE - 1;
+    printf("current size is %d\n", size);
     gettimeofday(&t1, NULL);
     for(int i = 0; i<steps;i++){
       testr[(i * 16) % size]++;
