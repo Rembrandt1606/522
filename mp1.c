@@ -13,6 +13,7 @@
 #define STOP_SIZE  16*MB
 #define SIZE 128
 #define BILLION 1000000000L
+#define L1SIZE 32*KB
 char array[MAX_ARR];
 // Provides elapsed Time between t1 and t2 in milli sec
 
@@ -201,7 +202,10 @@ int main(){
   printf("Starting Test:\n");
   int line_size = (int)LineSizeTest();
   printf("[INFO] Cache Line Size: %d bytes \n", line_size);
-  double testr = CacheSizeTest(line_size);  
+  //double testr = CacheSizeTest(line_size);  
+
+  int number_of_CL = L1SIZE/line_size;
+  printf("[INFO] The number of cache lines in L1 is: %d lines \n", number_of_CL);
   // Add your code here, and comment above
 }
 /////////////////////////////////////////////////////////
