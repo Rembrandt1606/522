@@ -9,7 +9,7 @@
 // LLC Parameters assumed
 #define START_SIZE 1*MB
 #define STOP_SIZE  16*MB
-#define SIZE 8
+#define SIZE 128
 #define BILLION 1000000000L
 char array[MAX_N];
 /////////////////////////////////////////////////////////
