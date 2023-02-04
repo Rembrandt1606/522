@@ -129,29 +129,31 @@ double CacheSizeTest(int line_size)
     run_sum = 0;
     num_accesses = current_size / line_size;
     // Pre-cache array addresses and ensure early address are cached
-    srand(i+1);
+   /* srand(i+1);
     for (int ii = MAX_ARR-1; ii > MAX_ARR - num_accesses - 1; ii--) { // for loop to shuffle
         
         testr = rand() % (ii + 1); //randomise j for shuffle with Fisher Yates
         access = testr/line_size;
         array[access] = 0;
         //printf("[INFO] Access at: %d \n", access);
-    }
+    }*/
 
-    srand(i+1);
+    
     gettimeofday(&t1, NULL);
-    for (int ii = MAX_ARR-1; ii > MAX_ARR - num_accesses - 1; ii--)
-    {
-        testr = rand() % (ii + 1); //randomise j for shuffle with Fisher Yates
-        access = testr/line_size;
-        //printf("[INFO] Accessing at %d index \n", access);
-        clock_gettime(CLOCK_MONOTONIC, &start);
-        array[access] += 1;
-        clock_gettime(CLOCK_MONOTONIC, &end);
-        run_sum += BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-        num_iters++;
-    }
-
+    for (int k = 0; k<5; k++){
+      srand(i+1);
+      for (int ii = MAX_ARR-1; ii > MAX_ARR - num_accesses - 1; ii--)
+      {
+          testr = rand() % (ii + 1); //randomise j for shuffle with Fisher Yates
+          access = testr/line_size;
+          //printf("[INFO] Accessing at %d index \n", access);
+          clock_gettime(CLOCK_MONOTONIC, &start);
+          array[access] += 1;
+          clock_gettime(CLOCK_MONOTONIC, &end);
+          run_sum += BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+          num_iters++;
+      }
+   }
     gettimeofday(&t2, NULL);
     printf("----------------------------------------------------------- \n \n");
     printf("[INFO] ElapsedTime is: %lf ms \n", elapsedTime(t1,t2));
