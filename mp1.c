@@ -111,7 +111,7 @@ double LineSizeTest(void)
 float CacheSizeTest(int line_size)
 {    
   //Defines the # of doublings until stop size is reach (starting at 256KB ) 
-  int div = (STOP_SIZE/(256 * KB));  
+  int div = (STOP_SIZE/(512 * KB));  
   //Log base 2 of this number
   int iter = (int)log_2(div) + 1;   
   //The current size of our test array
@@ -151,12 +151,12 @@ float CacheSizeTest(int line_size)
   for(int i = 1; i<iter-1; i++){
     printf("Testing at %d iteration \n", i);
     // When the performance between successive iterations is not different, the processor is limited by access latency
-      /*if(PercentDiff(retvec[i], retvec[i-1]) > .3 && estimate_found == 0){
+      if(PercentDiff(retvec[i], retvec[i-1]) > .3 && estimate_found == 0){
         retval = sizevec[i];
         printf("Estimate found at %d iteration with value of %.1f MB \n", i, retval);
         estimate_found = 1;
         
-      }*/
+      }
   }
  
   free(testr);
