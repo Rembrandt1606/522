@@ -191,7 +191,7 @@ int main(){
     printf("current size is %d\n", size);
     gettimeofday(&t1, NULL);
     for(int i = 0; i<steps;i++){
-      testr[(i * 16) % size]++;
+      testr[(i * testd) % size]++;
     }
     gettimeofday(&t2, NULL);
     time = elapsedTime(t1,t2);
