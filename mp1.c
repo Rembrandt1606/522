@@ -94,10 +94,10 @@ double LineSizeTest(void)
   }
   double retval = 0.0;
   for(int i = 0; i<num_steps-1; i++){
-    //printf("Percent diff between %lf and %lf is %lf \n", retvec[i], retvec[i+1], PercentDiff(retvec[i], retvec[i+1]));
+    // When the performance between successive iterations is not different, the processor is limited by cache access latency
+    // Meaning a new 
       if(PercentDiff(retvec[i], retvec[i+1]) < .3){
         retval = pow(2.0,(double)i+1);
-        //printf("Not Different at %d\n", i+1);
       }
   }
  
@@ -110,73 +110,41 @@ double LineSizeTest(void)
 /////////////////////////////////////////////////////////
 double CacheSizeTest(int line_size)
 {    
+  //Defines the # of doublings until stop size is reach (starting at 256KB ) 
+  int div = (STOP_SIZE/(256 * KB));  
+  //Log base 2 of this number
+  int iter = (int)log_2(div) + 1;   
+  //The current size of our test array
+  int size = 0;                      
+  //Our test array, using ints to make calcuation simpler (1G size)
+  int *testr = (int *)malloc(1024*MB * sizeof(int)); 
+  //Number of steps to get accurate estimation of access time
+  int steps = 100 * 1024 * 1024; 
+  //How much we change the accesses to our array
 
-  int current_size = 0;
-  int max_iter = (int)log_2((STOP_SIZE/KB)) - 1;
-  double *retvec = (double *)calloc(max_iter, sizeof(double));
-  int access;
-  int num_accesses = 0;
+  // DEFINING OUR TIME VARIABLES
+  long long unsigned int time_diff = 0;
+  double time;
   struct timeval t1, t2;
-  struct timespec start, end;
-  int num_iters;
-  long long unsigned int run_sum = 0;
-  int testr = 0.0;
-  printf("[INFO] Max number of steps is: %d \n", max_iter);
-  
-  for(int i = 0; i<max_iter; i++){
-    
-    current_size = KB * (int)pow(2.0,i);
-    num_iters = 0;
-    run_sum = 0;
-    num_accesses = current_size / line_size;
-    // Pre-cache array addresses and ensure early address are cached
-   /* srand(i+1);
-    for (int ii = MAX_ARR-1; ii > MAX_ARR - num_accesses - 1; ii--) { // for loop to shuffle
-        
-        testr = rand() % (ii + 1); //randomise j for shuffle with Fisher Yates
-        access = testr/line_size;
-        array[access] = 0;
-        //printf("[INFO] Access at: %d \n", access);
-    }*/
 
+  // TEST ITSELF
+  for (int j = 0; j<iter; j++) {
     
+    size = pow(2,j)*START_SIZE - 1;
+    printf("current size is %d\n", size);
     gettimeofday(&t1, NULL);
-    for (int k = 0; k<400; k++){
-      srand(i+1);
-      for (int ii = MAX_ARR-1; ii > MAX_ARR - num_accesses - 1; ii--)
-      {
-          testr = rand() % (ii + 1); //randomise j for shuffle with Fisher Yates
-          access = testr/line_size;
-          //printf("[INFO] Accessing at %d index \n", access);
-          clock_gettime(CLOCK_MONOTONIC, &start);
-          array[access] += 1;
-          clock_gettime(CLOCK_MONOTONIC, &end);
-          run_sum += BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-          num_iters++;
-      }
-   }
+    for(int i = 0; i<steps;i++){
+      testr[(i * 16) % size]++;
+    }
     gettimeofday(&t2, NULL);
-    printf("----------------------------------------------------------- \n \n");
-    printf("[INFO] ElapsedTime is: %lf ms \n", elapsedTime(t1,t2));
-    //printf("[INFO] The average runtime is: %llu nanoseconds \n", (run_sum/3));
-    //printf("[INFO] The number of element accessed is: %d \n", num_iters);
-    //printf("[INFO] The address range is: %d bytes \n", (num_iters)*line_size);
-    printf("[INFO] Number of accesses is: %d \n", num_accesses);
-    printf("[INFO] The current size is: %d KB \n", (int)pow(2.0,i));
-    //printf("[INFO] The average access time is: %llu nanoseconds \n", (run_sum/num_iters));
-    retvec[i] = elapsedTime(t1,t2);
+    time = elapsedTime(t1,t2);
+    printf("Time: %lf \n", time);
+    printf("Average time per element: %lf us\n", (double)(time/(double)steps) * 1000);
   }
+  
+  free(testr);
 
   double retval;
-
-  /*for(int i = 0; i<max_iter-1; i++){ 
-    printf("Percent diff between %lf and %lf is %lf \n", retvec[i], retvec[i+1], PercentDiff(retvec[i], retvec[i+1]));
-      if(PercentDiff(retvec[i], retvec[i+1]) > .3){
-        //retval = pow(2.0,(double)i+1);
-        printf("Different at %d\n", i+1);
-      }
-  }*/
-  free(retvec);
   return retval; 
 }
 /////////////////////////////////////////////////////////
