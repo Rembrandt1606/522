@@ -135,7 +135,7 @@ float CacheSizeTest(int line_size)
     
     size = pow(2,j)*START_SIZE - 1;
     report_size = (float)size/(1*MB);
-    printf("current size is %.1f MB \n", report_size);
+    //printf("current size is %.1f MB \n", report_size);
     sizevec[j] = report_size;
     gettimeofday(&t1, NULL);
     for(int i = 0; i<steps;i++){
@@ -144,15 +144,14 @@ float CacheSizeTest(int line_size)
     gettimeofday(&t2, NULL);
     time = elapsedTime(t1,t2);
     retvec[j] = time;
-    printf("Time: %lf \n", time);
-    printf("Average time per element: %lf us\n", (double)(time/(double)steps) * 1000);
+   // printf("Time: %lf \n", time);
+   // printf("Average time per element: %lf us\n", (double)(time/(double)steps) * 1000);
   }
   float retval = 0.0;
   for(int i = 1; i<iter-1; i++){
     //printf("Testing at %d iteration \n", i);
     // When the performance between successive iterations is not different, the processor is limited by access latency
-    printf("Percent difference between %.1f MB and %.1f MB is %lf \n", sizevec[i],  sizevec[i-1],PercentDiff(retvec[i], retvec[i-1]));
-      if(PercentDiff(retvec[i], retvec[i-1]) > .3 && estimate_found == 0){
+      if(PercentDiff(retvec[i], retvec[i-1]) > 3 && estimate_found == 0){
         retval = sizevec[i];
         //printf("Estimate found at %d iteration with value of %.1f MB \n", i, retval);
         estimate_found = 1;
@@ -190,40 +189,6 @@ int main(){
   printf("[INFO] Cache Line Size: %d bytes \n", line_size);
   float llc_size = CacheSizeTest(line_size);
   printf("[INFO] Best Estimator of LLC size: %.1f MB \n", llc_size);
-  /*
-  //double testr = CacheSizeTest(line_size); 
-  long div = (STOP_SIZE/(256 * KB));
-  printf("div is %ld \n", div);
-  int iter = (int)log_2(div) + 1;
-  int size = 0;
-  printf("iter: %d \n", iter);
-  int *testr = (int *)malloc(1024*MB * sizeof(int)); 
-  int steps = 64 * 1024 * 1024; 
-  int lengthMod = 0;
-  long long unsigned int time_diff = 0;
-  int testd = line_size/sizeof(int);
-  printf("Testd is %d \n", testd);
-  double time;
-  float report_size = 0;
-  struct timeval t1, t2;
-  // start timer
-  for (int j = 0; j<iter; j++) {
-    
-    size = pow(2,j)*START_SIZE - 1;
-    //printf("current size is %d\n", size);
-    report_size = (float)size/(1*MB);
-    printf("current size is %.1f MB \n", report_size);
-    gettimeofday(&t1, NULL);
-    for(int i = 0; i<steps;i++){
-      testr[(i * testd) % size]++;
-    }
-    gettimeofday(&t2, NULL);
-    time = elapsedTime(t1,t2);
-    printf("Time: %lf \n", time);
-    printf("Average time per element: %lf us\n", (double)(time/(double)steps) * 1000);
-  }
-  
-  free(testr);*/
 
   // Add your code here, and comment above
 }
