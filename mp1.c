@@ -119,7 +119,7 @@ float CacheSizeTest(int line_size)
   //Our test array, using ints to make calcuation simpler (1G size)
   int *testr = (int *)malloc(1024*MB * sizeof(int)); 
   //Number of steps to get accurate estimation of access time
-  int steps = 100 * 1024 * 1024; 
+  int steps = 120 * 1024 * 1024; 
   //Array to store the execution times
   double *retvec = (double *)calloc(iter, sizeof(double));
   float *sizevec = (float *)calloc(iter, sizeof(float));
@@ -135,7 +135,7 @@ float CacheSizeTest(int line_size)
     
     size = pow(2,j)*START_SIZE - 1;
     report_size = (float)size/(1*MB);
-    //printf("current size is %.1f MB \n", report_size);
+    printf("current size is %.1f MB \n", report_size);
     sizevec[j] = report_size;
     gettimeofday(&t1, NULL);
     for(int i = 0; i<steps;i++){
@@ -144,7 +144,7 @@ float CacheSizeTest(int line_size)
     gettimeofday(&t2, NULL);
     time = elapsedTime(t1,t2);
     retvec[j] = time;
-    printf("Time: %lf \n", time);
+    //printf("Time: %lf \n", time);
     printf("Average time per element: %lf us\n", (double)(time/(double)steps) * 1000);
   }
   float retval = 0.0;
