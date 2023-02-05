@@ -152,7 +152,7 @@ float CacheSizeTest(int line_size)
     // When the performance between successive iterations is not different, the processor is limited by access latency
       if(PercentDiff(retvec[i], retvec[i-1]) > .3 && estimate_found == 0){
         retval = sizevec[i];
-        printf("Estimate found at %d iteration with value of %.1f MB \n", retval);
+        printf("Estimate found at %d iteration with value of %.1f MB \n", i, retval);
         estimate_found = 1;
         
       }
