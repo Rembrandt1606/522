@@ -149,6 +149,7 @@ float CacheSizeTest(int line_size)
   }
   float retval = 0.0;
   for(int i = 1; i<iter-1; i++){
+    printf("Testing at %d iteration \n", i);
     // When the performance between successive iterations is not different, the processor is limited by access latency
       if(PercentDiff(retvec[i], retvec[i-1]) > .3 && estimate_found == 0){
         retval = sizevec[i];
