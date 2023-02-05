@@ -11,7 +11,7 @@
 #define KB (1*1024)
 // LLC Parameters assumed
 #define START_SIZE 512*KB
-#define STOP_SIZE  2048*MB
+#define STOP_SIZE  1024*MB
 #define SIZE 128
 #define BILLION 1000000000L
 char array[MAX_ARR];
@@ -117,7 +117,7 @@ float CacheSizeTest(int line_size)
   //The current size of our test array
   int size = 0;                      
   //Our test array, using ints to make calcuation simpler (1G size)
-  int *testr = (int *)malloc(2048*MB * sizeof(int)); 
+  int *testr = (int *)malloc(1024*MB * sizeof(int)); 
   //Number of steps to get accurate estimation of access time
   int steps = 20 * 1024 * 1024; 
   //Array to store the execution times
