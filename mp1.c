@@ -10,7 +10,7 @@
 #define MB    (1024*1024)
 #define KB (1*1024)
 // LLC Parameters assumed
-#define START_SIZE 256*KB
+#define START_SIZE 512*KB
 #define STOP_SIZE  1024*MB
 #define SIZE 128
 #define BILLION 1000000000L
@@ -108,7 +108,7 @@ double LineSizeTest(void)
 /////////////////////////////////////////////////////////
 // Change this, including input parameters
 /////////////////////////////////////////////////////////
-double CacheSizeTest(int line_size)
+float CacheSizeTest(int line_size)
 {    
   //Defines the # of doublings until stop size is reach (starting at 256KB ) 
   int div = (STOP_SIZE/(256 * KB));  
@@ -120,31 +120,47 @@ double CacheSizeTest(int line_size)
   int *testr = (int *)malloc(1024*MB * sizeof(int)); 
   //Number of steps to get accurate estimation of access time
   int steps = 100 * 1024 * 1024; 
-  //How much we change the accesses to our array
-
+  //Array to store the execution times
+  double *retvec = (double *)calloc(iter, sizeof(double));
+  float *sizevec = (float *)calloc(iter, sizeof(float));
   // DEFINING OUR TIME VARIABLES
   long long unsigned int time_diff = 0;
   double time;
+  float report_size = 0.0;
   struct timeval t1, t2;
-
+  int estimate_found = 0;
+  
   // TEST ITSELF
   for (int j = 0; j<iter; j++) {
     
     size = pow(2,j)*START_SIZE - 1;
-    printf("current size is %d\n", size);
+    report_size = (float)size/(1*MB);
+    printf("current size is %.1f MB \n", report_size);
+    sizevec[j] = report_size;
     gettimeofday(&t1, NULL);
     for(int i = 0; i<steps;i++){
       testr[(i * (line_size/sizeof(int))) % size]++;
     }
     gettimeofday(&t2, NULL);
     time = elapsedTime(t1,t2);
+    retvec[j] = time;
     printf("Time: %lf \n", time);
     printf("Average time per element: %lf us\n", (double)(time/(double)steps) * 1000);
   }
-  
+  float retval = 0.0;
+  for(int i = 1; i<iter-1; i++){
+    // When the performance between successive iterations is not different, the processor is limited by access latency
+      if(PercentDiff(retvec[i], retvec[i-1]) > .3 && estimate_found == 0){
+        retval = sizevec[i];
+        printf("Estimate found at %d iteration with value of %.1f MB \n", retval);
+        estimate_found = 1;
+        
+      }
+  }
+ 
   free(testr);
-
-  double retval;
+  free(retvec);
+  free(sizevec);
   return retval; 
 }
 /////////////////////////////////////////////////////////
@@ -170,6 +186,8 @@ int main(){
   printf("Starting Test:\n");
   int line_size = (int)LineSizeTest();
   printf("[INFO] Cache Line Size: %d bytes \n", line_size);
+  float llc_size = CacheSizeTest(line_size);
+  /*
   //double testr = CacheSizeTest(line_size); 
   long div = (STOP_SIZE/(256 * KB));
   printf("div is %ld \n", div);
@@ -191,7 +209,7 @@ int main(){
     size = pow(2,j)*START_SIZE - 1;
     //printf("current size is %d\n", size);
     report_size = (float)size/(1*MB);
-    printf("current size is %.3f MB \n", report_size);
+    printf("current size is %.1f MB \n", report_size);
     gettimeofday(&t1, NULL);
     for(int i = 0; i<steps;i++){
       testr[(i * testd) % size]++;
@@ -202,7 +220,7 @@ int main(){
     printf("Average time per element: %lf us\n", (double)(time/(double)steps) * 1000);
   }
   
-  free(testr);
+  free(testr);*/
 
   // Add your code here, and comment above
 }
