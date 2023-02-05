@@ -144,7 +144,7 @@ float CacheSizeTest(int line_size)
     gettimeofday(&t2, NULL);
     time = elapsedTime(t1,t2);
     retvec[j] = time;
-    //printf("Time: %lf \n", time);
+    printf("Time: %lf \n", time);
     printf("Average time per element: %lf us\n", (double)(time/(double)steps) * 1000);
   }
   float retval = 0.0;
