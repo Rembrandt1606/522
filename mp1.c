@@ -119,7 +119,7 @@ float CacheSizeTest(int line_size)
   //Our test array, using ints to make calcuation simpler (1G size)
   int *testr = (int *)malloc(1024*MB * sizeof(int)); 
   //Number of steps to get accurate estimation of access time
-  int steps = 120 * 1024 * 1024; 
+  int steps = 60 * 1024 * 1024; 
   //Array to store the execution times
   double *retvec = (double *)calloc(iter, sizeof(double));
   float *sizevec = (float *)calloc(iter, sizeof(float));
