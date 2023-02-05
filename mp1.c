@@ -180,7 +180,7 @@ int main(){
   int steps = 64 * 1024 * 1024; 
   int lengthMod = 0;
   long long unsigned int time_diff = 0;
-  int tesd = line_size/sizeof(int));
+  int testd = line_size/sizeof(int);
   printf("Testd is %d \n", testd);
   double time;
   struct timeval t1, t2;
