@@ -183,12 +183,15 @@ int main(){
   int testd = line_size/sizeof(int);
   printf("Testd is %d \n", testd);
   double time;
+  float report_size = 0;
   struct timeval t1, t2;
   // start timer
   for (int j = 0; j<iter; j++) {
     
     size = pow(2,j)*START_SIZE - 1;
-    printf("current size is %d\n", size);
+    //printf("current size is %d\n", size);
+    report_size = (float)size/(1*MB);
+    printf("current size is %.3f MB \n", report_size);
     gettimeofday(&t1, NULL);
     for(int i = 0; i<steps;i++){
       testr[(i * testd) % size]++;
