@@ -11,7 +11,7 @@
 #define KB (1*1024)
 // LLC Parameters assumed
 #define START_SIZE 512*KB
-#define STOP_SIZE  1024*MB
+#define STOP_SIZE  4096*MB
 #define SIZE 128
 #define BILLION 1000000000L
 char array[MAX_ARR];
@@ -117,9 +117,9 @@ float CacheSizeTest(int line_size)
   //The current size of our test array
   int size = 0;                      
   //Our test array, using ints to make calcuation simpler (1G size)
-  int *testr = (int *)malloc(1024*MB * sizeof(int)); 
+  int *testr = (int *)malloc(4096*MB * sizeof(int)); 
   //Number of steps to get accurate estimation of access time
-  int steps = 100 * 1024 * 1024; 
+  int steps = 20 * 1024 * 1024; 
   //Array to store the execution times
   double *retvec = (double *)calloc(iter, sizeof(double));
   float *sizevec = (float *)calloc(iter, sizeof(float));
@@ -135,7 +135,7 @@ float CacheSizeTest(int line_size)
     
     size = pow(2,j)*START_SIZE - 1;
     report_size = (float)size/(1*MB);
-    printf("current size is %.1f MB \n", report_size);
+    //printf("current size is %.1f MB \n", report_size);
     sizevec[j] = report_size;
     gettimeofday(&t1, NULL);
     for(int i = 0; i<steps;i++){
@@ -149,11 +149,11 @@ float CacheSizeTest(int line_size)
   }
   float retval = 0.0;
   for(int i = 1; i<iter-1; i++){
-    printf("Testing at %d iteration \n", i);
+    //printf("Testing at %d iteration \n", i);
     // When the performance between successive iterations is not different, the processor is limited by access latency
       if(PercentDiff(retvec[i], retvec[i-1]) > .3 && estimate_found == 0){
         retval = sizevec[i];
-        printf("Estimate found at %d iteration with value of %.1f MB \n", i, retval);
+        //printf("Estimate found at %d iteration with value of %.1f MB \n", i, retval);
         estimate_found = 1;
         
       }
@@ -188,6 +188,7 @@ int main(){
   int line_size = (int)LineSizeTest();
   printf("[INFO] Cache Line Size: %d bytes \n", line_size);
   float llc_size = CacheSizeTest(line_size);
+  printf("[INFO] Best Estimator of LLC size: %.1f MB \n", llc_size);
   /*
   //double testr = CacheSizeTest(line_size); 
   long div = (STOP_SIZE/(256 * KB));
