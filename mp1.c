@@ -180,6 +180,8 @@ int main(){
   int steps = 64 * 1024 * 1024; 
   int lengthMod = 0;
   long long unsigned int time_diff = 0;
+  int tesd = line_size/sizeof(int));
+  printf("Testd is %d \n", testd);
   double time;
   struct timeval t1, t2;
   // start timer
@@ -189,7 +191,7 @@ int main(){
     printf("current size is %d\n", size);
     gettimeofday(&t1, NULL);
     for(int i = 0; i<steps;i++){
-      testr[(i * (line_size/sizeof(int))) % size]++;
+      testr[(i * 16) % size]++;
     }
     gettimeofday(&t2, NULL);
     time = elapsedTime(t1,t2);
