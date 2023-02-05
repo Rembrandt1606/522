@@ -119,7 +119,7 @@ float CacheSizeTest(int line_size)
   //Our test array, using ints to make calcuation simpler (1G size)
   int *testr = (int *)malloc(1024*MB * sizeof(int)); 
   //Number of steps to get accurate estimation of access time
-  int steps = 60 * 1024 * 1024; 
+  int steps = 1 * 1024 * 1024; 
   //Array to store the execution times
   double *retvec = (double *)calloc(iter, sizeof(double));
   float *sizevec = (float *)calloc(iter, sizeof(float));
@@ -190,6 +190,18 @@ int main(){
   float llc_size = CacheSizeTest(line_size);
   printf("[INFO] Best Estimator of LLC size: %.1f MB \n", llc_size);
 
+  int *testr = (int *)malloc(16 * sizeof(int));
+  struct timespec start, end;
+  u_int64_t diff;
+
+  clock_gettime(CLOCK_MONOTONIC, &start);	/* mark start time */
+	testr[0] = 1;
+	clock_gettime(CLOCK_MONOTONIC, &end);	/* mark the end time */
+
+  diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+	printf("elapsed time = %llu nanoseconds\n", (long long unsigned int) diff);
+
+  free(testr);
   // Add your code here, and comment above
 }
 /////////////////////////////////////////////////////////
