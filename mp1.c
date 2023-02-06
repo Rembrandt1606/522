@@ -135,7 +135,7 @@ float CacheSizeTest(int line_size)
     
     size = pow(2,j)*START_SIZE - 1;
     report_size = (float)size/(1*MB);
-    //printf("current size is %.1f MB \n", report_size);
+    printf("current size is %.1f MB \n", report_size);
     sizevec[j] = report_size;
     gettimeofday(&t1, NULL);
     for(int i = 0; i<steps;i++){
@@ -144,8 +144,8 @@ float CacheSizeTest(int line_size)
     gettimeofday(&t2, NULL);
     time = elapsedTime(t1,t2);
     retvec[j] = time;
-   // printf("Time: %lf \n", time);
-   // printf("Average time per element: %lf us\n", (double)(time/(double)steps) * 1000);
+    printf("Time: %lf \n", time);
+    printf("Average time per element: %lf us\n", (double)(time/(double)steps) * 1000);
   }
   float retval = 0.0;
   for(int i = 1; i<iter-1; i++){
