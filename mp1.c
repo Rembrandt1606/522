@@ -135,7 +135,7 @@ float CacheSizeTest(int line_size)
     
     size = pow(2,j)*START_SIZE - 1;
     report_size = (float)size/(1*MB);
-    printf("current size is %.1f MB \n", report_size);
+    //printf("current size is %.1f MB \n", report_size);
     sizevec[j] = report_size;
     gettimeofday(&t1, NULL);
     for(int i = 0; i<steps;i++){
@@ -144,8 +144,8 @@ float CacheSizeTest(int line_size)
     gettimeofday(&t2, NULL);
     time = elapsedTime(t1,t2);
     retvec[j] = time;
-    printf("Time: %lf \n", time);
-    printf("Average time per element: %lf us\n", (double)(time/(double)steps) * 1000);
+    //printf("Time: %lf \n", time);
+    //printf("Average time per element: %lf us\n", (double)(time/(double)steps) * 1000);
   }
   float retval = 0.0;
   for(int i = 1; i<iter-1; i++){
@@ -167,16 +167,27 @@ float CacheSizeTest(int line_size)
 /////////////////////////////////////////////////////////
 // Change this, including input parameters
 /////////////////////////////////////////////////////////
-double MemoryTimingTest(void)
+void MemoryTimingTest(void)
 {    
-  double retval;
-  return retval; 
+  int *testr = (int *)malloc(16 * sizeof(int));
+  struct timespec start, end;
+  u_int64_t diff;
+
+  clock_gettime(CLOCK_MONOTONIC, &start);	/* mark start time */
+	testr[0] = 1;
+	clock_gettime(CLOCK_MONOTONIC, &end);	/* mark the end time */
+
+  diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
+	printf("[INFO] Estimator for memory access latency is = %llu nanoseconds\n", (long long unsigned int) diff);
+
+  free(testr); 
 }
 /////////////////////////////////////////////////////////
 // Change this, including input parameters
 /////////////////////////////////////////////////////////
 double CacheAssocTest(void)
 {    
+  // Didnt get too :(
   double retval;
   return retval; 
 }
@@ -189,19 +200,9 @@ int main(){
   printf("[INFO] Cache Line Size: %d bytes \n", line_size);
   float llc_size = CacheSizeTest(line_size);
   printf("[INFO] Best Estimator of LLC size: %.1f MB \n", llc_size);
+  MemoryTimingTest();
 
-  int *testr = (int *)malloc(16 * sizeof(int));
-  struct timespec start, end;
-  u_int64_t diff;
-
-  clock_gettime(CLOCK_MONOTONIC, &start);	/* mark start time */
-	testr[0] = 1;
-	clock_gettime(CLOCK_MONOTONIC, &end);	/* mark the end time */
-
-  diff = BILLION * (end.tv_sec - start.tv_sec) + end.tv_nsec - start.tv_nsec;
-	printf("elapsed time = %llu nanoseconds\n", (long long unsigned int) diff);
-
-  free(testr);
+  
   // Add your code here, and comment above
 }
 /////////////////////////////////////////////////////////
